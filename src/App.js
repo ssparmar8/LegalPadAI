@@ -5,7 +5,8 @@ import { useState } from 'react';
 import axios from 'axios'
 
 function App() {
-  const [setData] = useState({})
+  // eslint-disable-next-line no-unused-vars
+  const [data, setData] = useState({})
   const [text, setText] = useState("")
 
   return (
@@ -30,6 +31,8 @@ function App() {
           socialSecurityNumber: "",
           necSpouseFirstName: "",
           necSpouseLastName: "",
+          spouseFirstName: "",
+          spouseLastName: "",
           relationship: "",
           emergencyContactInformation: "",
           more: "",
@@ -128,15 +131,15 @@ function App() {
             <div className="form-row">
               <div className="form-group col-md-4">
                 <label>First Name</label>
-                <Field id="firstName" name="firstName" placeholder="First Name" className="form-control" />
+                <Field name="firstName" placeholder="First Name" className="form-control" />
               </div>
               <div className="form-group col-md-4">
                 <label>Last Name</label>
-                <Field id="lastName" name="lastName" placeholder="Last Name" className="form-control" />
+                <Field name="lastName" placeholder="Last Name" className="form-control" />
               </div>
               <div className="form-group col-md-4">
                 <label>Contact Number</label>
-                <Field id="contactNumber" name="contactNumber" placeholder="Contact Number" className="form-control" />
+                <Field name="contactNumber" placeholder="Contact Number" className="form-control" />
               </div>
             </div>
 
@@ -217,14 +220,6 @@ function App() {
 
 
                 </div>
-                <div className="form-group col-md-4">
-                  <label>Last Name</label>
-                  <Field id="lastName" name="lastName" placeholder="Last Name" className="form-control" />
-                </div>
-                <div className="form-group col-md-3">
-                  <label>Contact Number</label>
-                  <Field id="contactNumber" name="contactNumber" placeholder="Contact Number" className="form-control" />
-                </div>
               </div>
 
               <fieldset>
@@ -232,11 +227,11 @@ function App() {
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label>First Name</label>
-                    <Field id="spouseFirstName" name="spouseFirstName" placeholder="First Name" className="form-control" />
+                    <Field name="spouseFirstName" placeholder="First Name" className="form-control" />
                   </div>
                   <div className="form-group col-md-6">
                     <label>Last Name</label>
-                    <Field id="spouseLastName" name="spouseLastName" placeholder="Last Name" className="form-control" />
+                    <Field name="spouseLastName" placeholder="Last Name" className="form-control" />
                   </div>
                 </div>
               </fieldset>
@@ -281,11 +276,11 @@ function App() {
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label>First Name</label>
-                  <Field id="necSpouseFirstName" name="necSpouseFirstName" placeholder="First Name" className="form-control" />
+                  <Field name="necSpouseFirstName" placeholder="First Name" className="form-control" />
                 </div>
                 <div className="form-group col-md-6">
                   <label>Last Name</label>
-                  <Field id="necSpouseLastName" name="necSpouseLastName" placeholder="Last Name" className="form-control" />
+                  <Field name="necSpouseLastName" placeholder="Last Name" className="form-control" />
                 </div>
               </div>
               </fieldset>
@@ -308,7 +303,7 @@ function App() {
               <div className="form-row">
                 <div className="form-group col-md-12">
                   <label>If yes, please explain.</label>
-                  <Field id="necSpouseFirstName" name="necSpouseFirstName" placeholder="Enter Text" className="form-control" as="textarea"/>
+                  <Field id="more" name="more" placeholder="Enter Text" className="form-control" as="textarea"/>
                 </div>
               </div>
               </fieldset>
@@ -321,9 +316,8 @@ function App() {
       <hr/>
         <div className='col-lg-12 col-sm-12 col-md-12'>
           <h4 className='caption-color'>Generated Text</h4>
+          <div>{text}</div>
         </div>
-      
-      <div>{text}</div>
     </div>
   );
 }
