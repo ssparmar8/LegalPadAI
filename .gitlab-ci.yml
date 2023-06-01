@@ -1,0 +1,63 @@
+image: docker:latest
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:dind
+
+before_script:
+  - docker --version
+  - apk add --update nodejs npm
+  - apk add --update aws-cli
+  - apk add --update zip
+  - node -v
+  - npm -v
+
+stages:
+  - build
+  - lint
+  - publish
+
+
+build:
+  stage: build
+  tags:
+    - docker
+  artifacts:
+    untracked: true
+  script:
+    - npm install --force
+    - npm run build
+
+lint:
+  stage: lint
+  tags:
+    - docker
+  dependencies:
+    - build
+  script:
+      - npm run lint
+
+publish-master:
+  stage: publish
+  tags:
+    - docker
+  dependencies:
+    - build
+  script:
+    - zip -r react_app.zip build/ scripts/ appspec.yml
+
+    - if [[ "${CI_COMMIT_REF_NAME}" == "master" ]] ; then
+      export AWS_ACCESS_KEY_ID=$UAT_AWS_ACCESS_KEY_ID;
+      export AWS_SECRET_ACCESS_KEY=$UAY_AWS_SECRET_ACCESS_KEY;
+      aws s3 cp react_app.zip s3://legalpad-front-bucket/;
+      fi
+  only:
+    - master
+
+
+
+  
+
+
